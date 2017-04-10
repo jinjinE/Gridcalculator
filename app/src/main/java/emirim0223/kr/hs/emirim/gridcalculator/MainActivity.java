@@ -2,20 +2,30 @@ package emirim0223.kr.hs.emirim.gridcalculator;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
-    EditText text1, text2;
+    EditText edit1, edit2;
     Button zero, one, two, three, four, five, six, seven, eight, nine, plus, minus, multiply, division;
     Button[] butNums = new Button[10];
     Button[] butOps = new Button[4];
+    public static final int SELECT_EDIT1 = 0;
+    public static final int SELECT_EDIT2 = 1;
+    int selectEdit = SELECT_EDIT1;
+    int num1, num2;
+    String numStr = "";
    /* int[] ids = { R.id.zero, R.id.one, R.id.two, R.id.three, R.id.four, R.id.five, R.id.six, R.id.seven, R.id.eight, R.id.nine};*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        edit1=(EditText)findViewById(R.id.text1);
+        edit2=(EditText)findViewById(R.id.text2);
+        edit1.setOnTouchListener(EditHandler);
+        edit2.setOnTouchListener(EditHandler);
         /*text1 = (EditText)findViewById(R.id.text1);
         text2 = (EditText)findViewById(R.id.text2);
         zero = (Button)findViewById(R.id.zero);
@@ -41,23 +51,53 @@ public class MainActivity extends AppCompatActivity {
 
         for(int i = 0; i < butOps.length; i++){
             // butNums[i] = (Button)findViewById(ids[i]);
-            butOps[i] = (Button)findViewById(R.id.one + i);
+            butOps[i] = (Button)findViewById(R.id.but1 + i);
             butOps[i].setOnClickListener(butOpHandler);
         }
 
-        View.OnClickListener butNumHandler = new View.OnClickListener(){
 
-            @Override
-            public void onClick(View view) {
-
-            }
-        };
-        View.OnClickListener butOpHandler = new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-
-            }
-        };
     }
+    View.OnClickListener butNumHandler = new View.OnClickListener(){
+
+        @Override
+        public void onClick(View view) {
+            Button but = (Button)view;
+            numStr+=but.getText();
+            switch(selectEdit)
+            {
+                case SELECT_EDIT1:
+                    edit1.setText(numStr);
+                    break;
+                case SELECT_EDIT2:
+                    edit2.setText(numStr);
+                    break;
+            }
+        }
+    };
+
+    View.OnClickListener butOpHandler = new View.OnClickListener(){
+
+        @Override
+        public void onClick(View view) {
+            switch(view.getId()){
+                case R.id.but1:
+                    num1 = Integer.parseInt();
+            }
+        }
+    };
+    View.OnTouchListener EditHandler = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View view, MotionEvent motionEvent) {
+            numStr = "";
+            switch(view.getId()){
+                case R.id.text1:
+                    selectEdit = SELECT_EDIT1;
+                    break;
+                case R.id.text2:
+                    selectEdit = SELECT_EDIT2;
+                    break;
+            }
+            return true;
+        }
+    };
 }
