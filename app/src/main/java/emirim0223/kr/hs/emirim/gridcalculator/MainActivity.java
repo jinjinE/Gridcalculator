@@ -7,8 +7,10 @@ import android.view.View;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Button;
+import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
     EditText edit1, edit2;
+    TextView result;
     Button zero, one, two, three, four, five, six, seven, eight, nine, plus, minus, multiply, division;
     Button[] butNums = new Button[10];
     Button[] butOps = new Button[4];
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         edit2=(EditText)findViewById(R.id.text2);
         edit1.setOnTouchListener(EditHandler);
         edit2.setOnTouchListener(EditHandler);
+        result = (TextView)findViewById(R.id.result);
         /*text1 = (EditText)findViewById(R.id.text1);
         text2 = (EditText)findViewById(R.id.text2);
         zero = (Button)findViewById(R.id.zero);
@@ -79,10 +82,24 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View view) {
+            num1 = Integer.parseInt(edit1.getText().toString());
+            num2 = Integer.parseInt(edit2.getText().toString());
+            int res = 0;
             switch(view.getId()){
                 case R.id.but1:
-                    num1 = Integer.parseInt();
+                    res = num1 + num2;
+                    break;
+                case R.id.but2:
+                    res = num1 - num2;
+                    break;
+                case R.id.but3:
+                    res = num1 / num2;
+                    break;
+                case R.id.but4:
+                    res = num1 * num2;
+                    break;
             }
+            result.setText(""+res);
         }
     };
     View.OnTouchListener EditHandler = new View.OnTouchListener() {
